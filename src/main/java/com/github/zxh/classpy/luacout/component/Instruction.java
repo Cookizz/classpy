@@ -53,6 +53,7 @@ public class Instruction extends LuacOutComponent {
                 expandRK("RK(C)", c());
                 expandUpValue("UpValue[A]", a());
                 expandUpValue("UpValue[B]", b());
+                expandKstBx();
                 break;
         }
     }
@@ -98,6 +99,15 @@ public class Instruction extends LuacOutComponent {
         if (opcode.description.contains(uvx)) {
             uvx += " => UpValue[" + x + "]";
             addKid(uvx);
+        }
+    }
+
+    private void expandKstBx() {
+        if (opcode.description.contains("Kst(Bx)")) {
+            int bx = bx();
+            String kstBx = "Kst(Bx) => Kst(" + bx + ")";
+            kstBx += " => " +func.getConstant(bx).getDesc();
+            addKid(kstBx);
         }
     }
 
