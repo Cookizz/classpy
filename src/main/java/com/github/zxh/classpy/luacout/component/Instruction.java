@@ -42,6 +42,9 @@ public class Instruction extends LuacOutComponent {
         this.func = func;
         addKid(opcode.description);
         switch (opcode) {
+            case OP_CALL:
+                expandCall();
+                break;
             case OP_RETURN:
                 expandReturn();
                 break;
@@ -58,6 +61,17 @@ public class Instruction extends LuacOutComponent {
         }
     }
 
+    // R(A), ... ,R(A+C-2) := R(A)(R(A+1), ... ,R(A+B-1))
+    private void expandCall() {
+        int a = a();
+        int b = b();
+        int c = c();
+
+        addKid("A => " + a);
+        addKid("B => " + b);
+        addKid("C => " + c);
+    }
+
     // return R(A), ... ,R(A+B-2)
     private void expandReturn() {
         int a = a();
@@ -65,10 +79,6 @@ public class Instruction extends LuacOutComponent {
 
         addKid("A => " + a);
         addKid("B => " + b);
-
-        for (int i = a; i <= a + b - 2; i++) {
-            addKid("R(" + (i) + ") => " + func.getLocVarName(i));
-        }
     }
 
     private void expandR(String rx, int x) {

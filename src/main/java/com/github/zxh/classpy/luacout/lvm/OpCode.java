@@ -43,7 +43,7 @@ public enum OpCode {
     OP_LE      ("ABC",  "if ((RK(B) <= RK(C)) ~= A) then pc++"),
     OP_TEST    ("AC",   "if not (R(A) <=> C) then pc++"),
     OP_TESTSET ("ABC",  "if (R(B) <=> C) then R(A) := R(B) else pc++ "),
-    OP_CALL    ("ABC",  "R(A), ... ,R(A+C-2) := R(A)(R(A+1), ... ,R(A+B-1)) "),
+    OP_CALL    ("ABC",  "R(A), ... ,R(A+C-2) := R(A)(R(A+1), ... ,R(A+B-1))"),
     OP_TAILCALL("ABC",  "return R(A)(R(A+1), ... ,R(A+B-1))"),
     OP_RETURN  ("AB",   "return R(A), ... ,R(A+B-2)"),
     OP_FORLOOP ("AsBx", "R(A)+=R(A+2); if R(A) <?= R(A+1) then { pc+=sBx; R(A+3)=R(A) }"),
